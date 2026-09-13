@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+@theme {
+  --color-espresso: #2b1b12;
+  --color-roast: #201209;
+  --color-mocha: #40291a;
+  --color-brass: #c98a3d;
+  --color-brass-soft: #e3b571;
+  --color-parchment: #f3ecdf;
+  --color-cream: #faf6ef;
+  --color-latte: #e7dcc7;
+  --color-cocoa: #6f6154;
+  --color-cocoa-deep: #46392e;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Work Sans", "Segoe UI", Tahoma, sans-serif;
+
+  --shadow-card: 0 14px 34px -12px rgb(32 18 9 / 0.18);
+  --shadow-deep: 0 30px 60px -20px rgb(32 18 9 / 0.45);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-cocoa-deep);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+::selection {
+  background-color: var(--color-brass);
+  color: var(--color-espresso);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- barra de rolagem ---------- */
+::-webkit-scrollbar {
+  width: 11px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-parchment);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-mocha);
+  border-radius: 8px;
+  border: 3px solid var(--color-parchment);
+}
+
+/* ---------- letreiro (marquee) ---------- */
+.ticker {
+  overflow: hidden;
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll var(--ticker-duration, 40s) linear infinite;
+}
+.ticker-track.is-reverse {
+  animation-direction: reverse;
+}
+.ticker:hover .ticker-track,
+.ticker:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+@keyframes ticker-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Ken Burns (respiração da foto) ---------- */
+.kenburns {
+  animation: kenburns 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes kenburns {
+  from {
+    transform: scale(1.02) translate(0, 0);
+  }
+  to {
+    transform: scale(1.12) translate(-1.6%, 1.4%);
+  }
+}
+
+/* ---------- selo giratório ---------- */
+.spin-slow {
+  animation: spin-slow 28s linear infinite;
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- ponto "aberto agora" ---------- */
+.live-dot {
+  animation: pulse-dot 2.4s ease-out infinite;
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(201 138 61 / 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgb(201 138 61 / 0);
+  }
+}
+
+/* ---------- indicador de rolagem do hero ---------- */
+.scrollcue-line {
+  overflow: hidden;
+}
+.scrollcue-inner {
+  animation: scrollcue 2.1s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+@keyframes scrollcue {
+  0% {
+    transform: translateY(-110%);
+  }
+  55% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(110%);
+  }
+}
+
+/* ---------- revelação ao rolar ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.85s ease,
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.from-left {
+  transform: translateX(-36px);
+}
+.reveal.from-right {
+  transform: translateX(36px);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- máscara de linha (títulos) ---------- */
+.line-mask {
+  display: block;
+  overflow: hidden;
+}
+.line-mask > span {
+  display: block;
+  transform: translateY(118%);
+  transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: inherit;
+}
+.line-mask.is-in > span {
+  transform: none;
+}
+
+/* ---------- sublinhado da navegação ---------- */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-brass);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- vapor do logotipo ---------- */
+.steam path {
+  animation: steam-rise 3.2s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+.steam path:nth-child(2) {
+  animation-delay: 0.5s;
+}
+@keyframes steam-rise {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0.5px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+}
+
+/* ---------- Cafezinho (agente de IA) ---------- */
+.typing-dot {
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.msg-in {
+  animation: msg-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+.steam-line {
+  animation: steam-rise 3.2s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+.steam-line:nth-of-type(2) {
+  animation-delay: 0.6s;
+}
+
+/* ---------- textura de papel (ruído) ---------- */
+.paper-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* ---------- movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ticker-track,
+  .kenburns,
+  .spin-slow,
+  .live-dot,
+  .scrollcue-inner,
+  .steam path,
+  .typing-dot,
+  .msg-in,
+  .pulse-ring,
+  .steam-line {
+    animation: none !important;
+  }
+  .ticker {
+    overflow-x: auto;
+  }
+  .reveal,
+  .reveal.from-left,
+  .reveal.from-right,
+  .line-mask > span {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
